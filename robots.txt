@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://viajes-d-gavi.com/sitemap.xml

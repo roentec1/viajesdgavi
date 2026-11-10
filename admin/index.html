@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Viajes D'Gavi by Morhú</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--primary:#0A7C8C;--primary-light:#1A9BAD;--dark:#1A2332;--gray:#6B7C8A;--light:#F8FBFC;--white:#fff;--success:#2ECC71;--danger:#E74C3C;--sidebar:260px}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',sans-serif;background:var(--light);color:var(--dark);min-height:100vh}
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0A7C8C,#065A66,#1A2332);padding:20px}
+    .login-card{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+    .login-card h1{font-size:1.5rem;text-align:center;margin-bottom:4px}
+    .login-card h1 span{color:var(--primary)}
+    .login-card .sub{text-align:center;color:var(--gray);font-size:.85rem;margin-bottom:28px}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;font-weight:500;font-size:.875rem;margin-bottom:5px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 13px;border:1.5px solid #E8EEF2;border-radius:10px;font-size:.9rem;font-family:inherit}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(10,124,140,.12)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 20px;border:none;border-radius:50px;font-weight:600;font-size:.875rem;cursor:pointer;transition:.2s;font-family:inherit;text-decoration:none}
+    .btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(10,124,140,.3)}
+    .btn-sm{padding:6px 12px;font-size:.78rem;border-radius:8px}
+    .btn-wa{background:#25D366;color:#fff}
+    .btn-outline{background:transparent;border:1.5px solid var(--primary);color:var(--primary)}
+    .btn-danger{background:var(--danger);color:#fff}
+    .btn-success{background:var(--success);color:#fff}
+    .btn-secondary{background:#6B7C8A;color:#fff}
+    .alert{padding:12px 16px;border-radius:10px;margin-bottom:14px;font-size:.875rem}
+    .alert-error{background:rgba(231,76,60,.1);color:#c0392b;border:1px solid rgba(231,76,60,.2)}
+    .alert-info{background:rgba(10,124,140,.08);border:1px solid rgba(10,124,140,.2);color:var(--dark)}
+    .admin-layout{display:none;min-height:100vh}
+    .admin-layout.show{display:flex}
+    .sidebar{width:var(--sidebar);background:var(--dark);color:#fff;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:100}
+    .sidebar-logo{padding:22px 20px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .sidebar-logo h2{font-size:1.1rem}.sidebar-logo span{color:var(--primary-light)}
+    .sidebar-logo small{display:block;font-size:.68rem;opacity:.55;margin-top:2px}
+    .sidebar-nav a{display:flex;align-items:center;gap:10px;padding:12px 20px;color:rgba(255,255,255,.7);text-decoration:none;font-size:.875rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+    .sidebar-nav a:hover,.sidebar-nav a.active{background:rgba(255,255,255,.08);color:#fff}
+    .sidebar-nav a.active{border-left:3px solid var(--primary-light)}
+    .main{margin-left:var(--sidebar);flex:1;padding:24px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+    .topbar h1{font-size:1.35rem}
+    .stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-bottom:22px}
+    .stat-card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+    .stat-card .label{font-size:.75rem;color:var(--gray);margin-bottom:4px}
+    .stat-card .value{font-size:1.55rem;font-weight:700;color:var(--primary)}
+    .stat-card .value.money{color:#2E7D32}
+    .card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,.05);margin-bottom:18px;overflow-x:auto}
+    .card h3{margin-bottom:14px;font-size:1.05rem}
+    table{width:100%;border-collapse:collapse;font-size:.84rem}
+    th{text-align:left;padding:9px 7px;border-bottom:2px solid #E8EEF2;color:var(--gray);font-weight:600;white-space:nowrap}
+    td{padding:11px 7px;border-bottom:1px solid #F0F4F7}
+    .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:600}
+    .badge-nuevo{background:#E3F2FD;color:#1565C0}
+    .badge-contactado{background:#E8F5E9;color:#2E7D32}
+    .badge-seguimiento{background:#FFF3E0;color:#E65100}
+    .badge-activo{background:#E8F5E9;color:#2E7D32}
+    .badge-inactivo{background:#FFEBEE;color:#C62828}
+    .actions{display:flex;gap:5px;flex-wrap:wrap}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    .filters input,.filters select{padding:8px 11px;border:1.5px solid #E8EEF2;border-radius:8px;font-size:.84rem;font-family:inherit}
+    .page{display:none}.page.active{display:block}
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:16px}
+    .modal-bg.show{display:flex}
+    .modal{background:#fff;border-radius:14px;padding:24px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;position:relative}
+    .modal h3{margin-bottom:16px}
+    .modal-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border:none;background:#E8EEF2;border-radius:50%;cursor:pointer;font-size:1.05rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+    @media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.form-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<div class="login-wrap" id="loginScreen">
+  <div class="login-card">
+    <div style="text-align:center;margin-bottom:8px"><img src="../assets/img/logo.jpg" alt="Viajes D'Gavi by Morhú" style="height:64px;width:auto;max-width:200px;object-fit:contain"></div>
+    <p class="sub">Panel de Administración</p>
+    <div class="alert alert-error" id="loginError" style="display:none"></div>
+    <form id="loginForm">
+      <div class="form-group"><label>Usuario</label><input type="text" id="loginUser" required autocomplete="username" autofocus></div>
+      <div class="form-group"><label>Contraseña</label><input type="password" id="loginPass" required autocomplete="current-password"></div>
+      <button type="submit" class="btn btn-primary" style="width:100%">Iniciar sesión</button>
+    </form>
+    <p style="text-align:center;margin-top:18px;font-size:.8rem;color:var(--gray)"><a href="../index.html" style="color:var(--primary)">← Volver al sitio</a></p>
+  </div>
+</div>
+
+<div class="admin-layout" id="adminLayout">
+  <aside class="sidebar">
+    <div class="sidebar-logo" style="text-align:center"><img src="../assets/img/logo.jpg" alt="Viajes D'Gavi" style="height:48px;width:auto;max-width:160px;object-fit:contain;margin-bottom:6px;background:#fff;border-radius:8px;padding:4px"><small>Panel Admin</small></div>
+    <nav class="sidebar-nav">
+      <a data-page="dashboard" class="active">📊 Dashboard</a>
+      <a data-page="clientes">👥 Clientes</a>
+      <a data-page="promociones">🏷️ Promociones</a>
+      <a data-page="destinos">📍 Destinos</a>
+      <a data-page="paquetes">📦 Paquetes</a>
+      <a data-page="ventas">💰 Ventas</a>
+      <a data-page="config">⚙️ Configuración</a>
+      <a id="btnLogout">🚪 Cerrar sesión</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="topbar"><h1>Dashboard</h1><span id="adminUserLabel" style="color:var(--gray);font-size:.875rem"></span></div>
+      <div class="alert alert-info">Datos desde Google Sheets. Si no configuraste la URL en <code>assets/js/config.js</code>, verás ejemplos / localStorage.</div>
+      <div class="stats">
+        <div class="stat-card"><div class="label">Solicitudes</div><div class="value" id="statClientes">—</div></div>
+        <div class="stat-card"><div class="label">Nuevos</div><div class="value" id="statNuevos">—</div></div>
+        <div class="stat-card"><div class="label">Promociones activas</div><div class="value" id="statPromos">—</div></div>
+        <div class="stat-card"><div class="label">Destinos</div><div class="value" id="statDestinos">—</div></div>
+        <div class="stat-card"><div class="label">Paquetes activos</div><div class="value" id="statPaquetes">—</div></div>
+        <div class="stat-card"><div class="label">Total ventas</div><div class="value money" id="statVentas">—</div></div>
+        <div class="stat-card"><div class="label">Ventas del mes</div><div class="value money" id="statVentasMes">—</div></div>
+        <div class="stat-card"><div class="label">Nº de ventas</div><div class="value" id="statNumVentas">—</div></div>
+      </div>
+      <div class="card">
+        <h3>Destinos más solicitados</h3>
+        <div class="toolbar">
+          <button class="btn btn-sm btn-secondary" id="btnDownloadDestinos">⬇️ Descargar listado CSV</button>
+        </div>
+        <table><thead><tr><th>#</th><th>Destino</th><th>Solicitudes</th></tr></thead><tbody id="destPopBody"></tbody></table>
+      </div>
+      <div class="card">
+        <h3>Acciones rápidas</h3>
+        <div class="toolbar">
+          <button class="btn btn-primary" data-page="clientes">Ver clientes</button>
+          <button class="btn btn-outline" data-page="ventas">Registrar venta</button>
+          <button class="btn btn-outline" data-page="promociones">Promociones</button>
+          <a href="../index.html" class="btn btn-outline" target="_blank">Ver sitio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENTES -->
+    <div class="page" id="page-clientes">
+      <div class="topbar"><h1>Clientes / Solicitudes</h1>
+        <button class="btn btn-sm btn-secondary" id="btnDownloadClientes">⬇️ Descargar CSV</button>
+      </div>
+      <div class="filters">
+        <input type="text" id="searchCliente" placeholder="Buscar nombre...">
+        <select id="filterEstado">
+          <option value="">Todos los estados</option>
+          <option>Nuevo</option><option>Contactado</option><option>En seguimiento</option>
+          <option>Cotización enviada</option><option>Reservado</option><option>Cerrado</option><option>Cancelado</option>
+        </select>
+      </div>
+      <div class="card"><table>
+        <thead><tr><th>Fecha</th><th>Nombre</th><th>Teléfono</th><th>Email</th><th>Destino</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="clientesBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- PROMOCIONES -->
+    <div class="page" id="page-promociones">
+      <div class="topbar"><h1>Promociones / Precios</h1>
+        <button class="btn btn-primary" id="btnNuevaPromo">+ Nueva promoción</button>
+      </div>
+      <div class="card"><table>
+        <thead><tr><th>Título</th><th>Destino</th><th>Precio</th><th>Antes</th><th>Dto</th><th>Noches</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="promosBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- DESTINOS -->
+    <div class="page" id="page-destinos">
+      <div class="topbar"><h1>Destinos</h1>
+        <div class="toolbar">
+          <button class="btn btn-sm btn-secondary" id="btnDownloadDestinos2">⬇️ CSV</button>
+          <button class="btn btn-primary" id="btnNuevoDestino">+ Nuevo destino</button>
+        </div>
+      </div>
+      <div class="card"><table>
+        <thead><tr><th>Destino</th><th>Categoría</th><th>País</th><th>Precio desde</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="destinosBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- PAQUETES -->
+    <div class="page" id="page-paquetes">
+      <div class="topbar"><h1>Paquetes</h1>
+        <button class="btn btn-primary" id="btnNuevoPaquete">+ Nuevo paquete</button>
+      </div>
+      <div class="card"><table>
+        <thead><tr><th>Título</th><th>Categoría</th><th>Destino</th><th>Noches</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="paquetesBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- VENTAS -->
+    <div class="page" id="page-ventas">
+      <div class="topbar"><h1>Ventas</h1>
+        <div class="toolbar">
+          <button class="btn btn-sm btn-secondary" id="btnDownloadVentas">⬇️ Descargar ventas CSV</button>
+          <button class="btn btn-primary" id="btnNuevaVenta">+ Registrar venta</button>
+        </div>
+      </div>
+      <div class="stats" style="margin-bottom:16px">
+        <div class="stat-card"><div class="label">Total recaudado</div><div class="value money" id="ventasTotal">$0</div></div>
+        <div class="stat-card"><div class="label">Este mes</div><div class="value money" id="ventasMes">$0</div></div>
+        <div class="stat-card"><div class="label">Cantidad</div><div class="value" id="ventasCount">0</div></div>
+      </div>
+      <div class="card"><table>
+        <thead><tr><th>Fecha</th><th>Cliente</th><th>Destino</th><th>Concepto</th><th>Monto</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="ventasBody"></tbody>
+      </table></div>
+    </div>
+
+    <!-- CONFIG -->
+    <div class="page" id="page-config">
+      <div class="topbar"><h1>Configuración</h1></div>
+
+      <div class="card">
+        <h3>🔗 Conexión Google Sheets (Apps Script)</h3>
+        <p style="color:var(--gray);font-size:.875rem;margin-bottom:14px">
+          Pega aquí la URL de tu <strong>Google Apps Script Web App</strong>. 
+          Al guardarla, el panel admin y este navegador usarán esa conexión de inmediato.
+          Para que <strong>todos los visitantes del sitio</strong> vean los datos actualizados, 
+          también debes poner la misma URL en <code>assets/js/config.js</code> y volver a publicar.
+        </p>
+        <div class="form-group">
+          <label>URL de Google Apps Script</label>
+          <input type="url" id="inputGasUrl" placeholder="https://script.google.com/macros/s/XXXX/exec" style="font-size:.85rem">
+        </div>
+        <div class="toolbar" style="margin-top:8px">
+          <button type="button" class="btn btn-primary" id="btnSaveGasUrl">💾 Guardar URL</button>
+          <button type="button" class="btn btn-outline" id="btnTestGasUrl">🔌 Probar conexión</button>
+          <button type="button" class="btn btn-secondary" id="btnDownloadConfig">⬇️ Descargar config.js</button>
+        </div>
+        <div id="gasMsg" class="alert" style="display:none;margin-top:14px"></div>
+        <p style="margin-top:14px;font-size:.85rem"><strong>URL activa:</strong> <span id="configUrl" style="word-break:break-all"></span></p>
+        <p style="margin-top:6px;font-size:.85rem"><strong>Estado:</strong> <span id="configStatus"></span></p>
+      </div>
+
+      <div class="card">
+        <h3>Cómo obtener la URL (paso a paso)</h3>
+        <ol style="padding-left:20px;color:var(--gray);font-size:.875rem;line-height:1.9">
+          <li>Abre tu Google Sheet → <strong>Extensiones → Apps Script</strong></li>
+          <li>Pega el código de <code>google-apps-script.js</code> y guarda</li>
+          <li><strong>Implementar → Nueva implementación → Aplicación web</strong></li>
+          <li>Ejecutar como: <strong>Yo</strong> · Acceso: <strong>Cualquiera</strong></li>
+          <li>Copia la URL que termina en <code>/exec</code> y pégala arriba</li>
+          <li>Clic en <strong>Guardar URL</strong> y luego <strong>Probar conexión</strong></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>Para que el sitio público se actualice solo</h3>
+        <p style="color:var(--gray);font-size:.875rem;line-height:1.7;margin-bottom:10px">
+          1. Guarda la URL aquí (admin).<br>
+          2. Clic en <strong>Descargar config.js</strong> (ya trae tu URL).<br>
+          3. Sustituye el archivo <code>assets/js/config.js</code> del hosting por el descargado.<br>
+          4. Listo: el portal principal leerá promociones, destinos y paquetes desde Google Sheets automáticamente.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Acceso admin</h3>
+        <p style="color:var(--gray);font-size:.875rem;margin-bottom:8px">Usuario y contraseña se definen en <code>assets/js/config.js</code></p>
+        <p>Usuario actual: <strong id="configUser"></strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL GENÉRICO -->
+<div class="modal-bg" id="modalForm">
+  <div class="modal">
+    <button class="modal-close" id="closeModal">&times;</button>
+    <h3 id="modalTitle">Formulario</h3>
+    <form id="genericForm"></form>
+  </div>
+</div>
+
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/api.js"></script>
+<script>
+const AUTH_KEY='vdg_admin_auth';
+let clientesCache=[], promosCache=[], destinosCache=[], paquetesCache=[], ventasCache=[], destPopulares=[];
+
+function isLoggedIn(){return sessionStorage.getItem(AUTH_KEY)==='1'}
+function login(u,p){const c=SITE_CONFIG.admin||{};if(u===(c.username||'admin')&&p===(c.passwordHash||'Admin2026!')){sessionStorage.setItem(AUTH_KEY,'1');return true}return false}
+function logout(){sessionStorage.removeItem(AUTH_KEY);location.reload()}
+
+async function deleteRecord(action, id, reloadFn, label){
+  if(!id){ alert('Sin ID'); return; }
+  if(!confirm('¿Eliminar este registro de '+label+'? Esta acción no se puede deshacer.')) return;
+  const res = await callAPI(action, { id: id });
+  if(res.success || res.useSample){
+    // Also remove from local caches / localStorage where applicable
+    if(action==='deleteCliente'){
+      clientesCache = clientesCache.filter(x => String(x.id) !== String(id));
+      renderClientes(clientesCache);
+    }
+    if(typeof reloadFn === 'function') await reloadFn();
+    alert(res.success ? 'Eliminado de Google Sheets' : 'Eliminado localmente');
+  } else {
+    alert(res.message || 'No se pudo eliminar');
+  }
+}
+
+/** Comprime imagen del PC y la sube a Drive vía Apps Script; devuelve URL */
+async function uploadLocalImage(file){
+  if(!file) return '';
+  if(!file.type || !file.type.startsWith('image/')){
+    alert('Solo se permiten imágenes');
+    return '';
+  }
+  // Comprimir en canvas para no saturar Sheets/Drive
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+  const compressed = await new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const maxW = 1200;
+      let w = img.width, h = img.height;
+      if(w > maxW){ h = Math.round(h * maxW / w); w = maxW; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
+  });
+  // Intentar subir a Drive
+  const res = await callAPI('uploadImage', {
+    base64: compressed,
+    filename: (file.name || 'imagen').replace(/\.[^.]+$/, '') + '.jpg',
+    mimeType: 'image/jpeg'
+  });
+  if(res.success && res.url){
+    return res.url;
+  }
+  // Fallback: usar data URL (funciona en el mismo navegador / si Sheets acepta)
+  console.warn('Upload Drive falló, usando data URL local', res);
+  return compressed;
+}
+
+function imageFieldHtml(currentUrl){
+  const cur = currentUrl || '';
+  return `
+    <div class="form-group">
+      <label>Imagen (URL o subir desde tu PC)</label>
+      <input type="url" name="imagen" id="fieldImagenUrl" value="${cur.replace(/"/g,'&quot;')}" placeholder="https://... o elige archivo abajo">
+      <input type="file" id="fieldImagenFile" accept="image/*" style="margin-top:8px;font-size:.85rem">
+      <div id="imgPreview" style="margin-top:10px">${cur ? '<img src="'+cur.replace(/"/g,'&quot;')+'" style="max-height:120px;border-radius:8px;object-fit:cover">' : ''}</div>
+      <small style="color:var(--gray);font-size:.75rem">Si subes desde tu PC, se guarda en Google Drive y el portal muestra la nueva imagen.</small>
+    </div>`;
+}
+
+async function resolveImageFromForm(form){
+  const fileInput = form.querySelector('#fieldImagenFile');
+  const urlInput = form.querySelector('[name="imagen"]');
+  if(fileInput && fileInput.files && fileInput.files[0]){
+    const btn = form.querySelector('[type="submit"]');
+    const prev = btn ? btn.textContent : '';
+    if(btn){ btn.disabled = true; btn.textContent = 'Subiendo imagen...'; }
+    try {
+      const url = await uploadLocalImage(fileInput.files[0]);
+      if(urlInput) urlInput.value = url;
+      return url;
+    } finally {
+      if(btn){ btn.disabled = false; btn.textContent = prev || 'Guardar'; }
+    }
+  }
+  return urlInput ? urlInput.value : '';
+}
+
+function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+function money(n){return '$'+Number(n||0).toLocaleString('es-MX')}
+
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-nav a[data-page]').forEach(a=>a.classList.remove('active'));
+  const page=document.getElementById('page-'+name);if(page)page.classList.add('active');
+  const link=document.querySelector(`.sidebar-nav a[data-page="${name}"]`);if(link)link.classList.add('active');
+  if(name==='dashboard')loadStats();
+  if(name==='clientes')loadClientes();
+  if(name==='promociones')loadPromos();
+  if(name==='destinos')loadDestinos();
+  if(name==='paquetes')loadPaquetes();
+  if(name==='ventas')loadVentas();
+  if(name==='config')loadConfig();
+}
+
+function downloadCSV(filename, rows){
+  const csv=rows.map(r=>r.map(c=>'"'+String(c??'').replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();
+}
+
+/* ---- LOADERS ---- */
+async function loadClientes(){
+  const res=await callAPI('getClientes',{});
+  const local=JSON.parse(localStorage.getItem('viajes_dgavi_leads')||'[]').map((l,i)=>({
+    id:'L'+i,fecha:(l.fecha||l.savedAt||'').slice(0,10),nombre:l.nombre||'',telefono:l.telefono||'',
+    whatsapp:(l.whatsapp||l.telefono||'').replace(/\D/g,''),email:l.email||'',destino:l.destino||'',estado:'Nuevo'
+  }));
+  const sample=[
+    {id:'A1',fecha:new Date().toISOString().slice(0,10),nombre:'María González',telefono:'81 1234 5678',whatsapp:'8112345678',email:'maria@email.com',destino:'Riviera Maya',estado:'Nuevo'},
+    {id:'B2',fecha:new Date(Date.now()-864e5).toISOString().slice(0,10),nombre:'Carlos Ramírez',telefono:'81 9876 5432',whatsapp:'8198765432',email:'carlos@email.com',destino:'Los Cabos',estado:'Contactado'}
+  ];
+  clientesCache=(res.success&&res.data&&res.data.length)?res.data:[...local,...sample];
+  renderClientes(clientesCache);
+}
+
+function renderClientes(list){
+  const body=document.getElementById('clientesBody');
+  if(!list.length){body.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:24px">Sin solicitudes</td></tr>';return}
+  body.innerHTML=list.map(c=>{
+    let b='badge-nuevo';if(c.estado==='Contactado')b='badge-contactado';if(c.estado==='En seguimiento')b='badge-seguimiento';
+    const wa=(c.whatsapp||(c.telefono||'').replace(/\D/g,''));
+    const msg=encodeURIComponent(`Hola ${c.nombre}, soy de Viajes D'Gavi by Morhú. Te contacto por tu solicitud sobre ${c.destino}.`);
+    return `<tr>
+      <td>${esc(c.fecha)}</td><td><strong>${esc(c.nombre)}</strong></td><td>${esc(c.telefono)}</td>
+      <td>${esc(c.email)}</td><td>${esc(c.destino)}</td>
+      <td><span class="badge ${b}">${esc(c.estado)}</span></td>
+      <td><div class="actions"><a class="btn btn-sm btn-wa" target="_blank" href="https://wa.me/52${wa}?text=${msg}">WhatsApp</a>
+        <button type="button" class="btn btn-sm btn-danger" data-del-cliente="${esc(String(c.id||''))}">Eliminar</button></div></td>
+    </tr>`;
+  }).join('');
+  body.querySelectorAll('[data-del-cliente]').forEach(btn=>{
+    btn.addEventListener('click',()=>deleteRecord('deleteCliente', btn.getAttribute('data-del-cliente'), loadClientes, 'clientes'));
+  });
+}
+
+async function loadPromos(){
+  promosCache=await getPromotions(100);
+  renderPromos(promosCache);
+}
+function renderPromos(list){
+  const body=document.getElementById('promosBody');
+  if(!list.length){body.innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--gray)">Sin promociones</td></tr>';return}
+  body.innerHTML=list.map(p=>{
+    const act=p.estado==='active'||p.estado==='Activo';
+    return `<tr>
+      <td><strong>${esc(p.titulo)}</strong></td><td>${esc(p.destino)}</td>
+      <td>${money(p.precio)}</td><td>${p.precio_anterior?money(p.precio_anterior):'—'}</td>
+      <td>${p.descuento?p.descuento+'%':'—'}</td><td>${p.noches||'—'}</td>
+      <td><span class="badge ${act?'badge-activo':'badge-inactivo'}">${act?'Activo':'Inactivo'}</span></td>
+      <td><div class="actions">
+        <button class="btn btn-sm btn-outline" data-edit-promo='${JSON.stringify(p).replace(/'/g,"&#39;")}'>Editar</button>
+        <button type="button" class="btn btn-sm btn-danger" data-del-promo="${esc(String(p.id||''))}">Eliminar</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  body.querySelectorAll('[data-edit-promo]').forEach(btn=>btn.addEventListener('click',()=>openPromoModal(JSON.parse(btn.getAttribute('data-edit-promo')))));
+  body.querySelectorAll('[data-del-promo]').forEach(btn=>btn.addEventListener('click',()=>deleteRecord('deletePromotion', btn.getAttribute('data-del-promo'), loadPromos, 'promociones')));
+}
+
+async function loadDestinos(){
+  const res=await callAPI('getDestinations',{});
+  destinosCache=(res.success&&res.data&&res.data.length)?res.data:await getDestinations(50);
+  renderDestinos(destinosCache);
+}
+function renderDestinos(list){
+  const body=document.getElementById('destinosBody');
+  if(!list.length){body.innerHTML='<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--gray)">Sin destinos</td></tr>';return}
+  body.innerHTML=list.map(d=>{
+    const act=d.estado==='active'||d.estado==='Activo'||!d.estado;
+    return `<tr>
+      <td><strong>${esc(d.nombre||d.destino)}</strong></td><td>${esc(d.categoria)}</td><td>${esc(d.pais||'México')}</td>
+      <td>${money(d.precio_desde)}</td>
+      <td><span class="badge ${act?'badge-activo':'badge-inactivo'}">${act?'Activo':'Inactivo'}</span></td>
+      <td><div class="actions">
+        <button class="btn btn-sm btn-outline" data-edit-dest='${JSON.stringify(d).replace(/'/g,"&#39;")}'>Editar</button>
+        <button type="button" class="btn btn-sm btn-danger" data-del-dest="${esc(String(d.id||''))}">Eliminar</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  body.querySelectorAll('[data-edit-dest]').forEach(btn=>btn.addEventListener('click',()=>openDestinoModal(JSON.parse(btn.getAttribute('data-edit-dest')))));
+  body.querySelectorAll('[data-del-dest]').forEach(btn=>btn.addEventListener('click',()=>deleteRecord('deleteDestination', btn.getAttribute('data-del-dest'), loadDestinos, 'destinos')));
+}
+
+async function loadPaquetes(){
+  const res=await callAPI('getPackages',{});
+  if(res.success&&res.data&&res.data.length){paquetesCache=res.data}
+  else{
+    paquetesCache=[
+      {id:1,titulo:'Todo Incluido Riviera Maya',categoria:'Playa',destino:'Riviera Maya',noches:5,precio:8999,precio_anterior:12999,estado:'active'},
+      {id:2,titulo:'Luna de Miel Los Cabos',categoria:'Luna de miel',destino:'Los Cabos',noches:4,precio:14999,precio_anterior:18999,estado:'active'}
+    ];
+  }
+  renderPaquetes(paquetesCache);
+}
+function renderPaquetes(list){
+  const body=document.getElementById('paquetesBody');
+  if(!list.length){body.innerHTML='<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--gray)">Sin paquetes</td></tr>';return}
+  body.innerHTML=list.map(p=>{
+    const act=p.estado==='active'||p.estado==='Activo';
+    return `<tr>
+      <td><strong>${esc(p.titulo)}</strong></td><td>${esc(p.categoria)}</td><td>${esc(p.destino)}</td>
+      <td>${p.noches||'—'}</td><td>${money(p.precio)}</td>
+      <td><span class="badge ${act?'badge-activo':'badge-inactivo'}">${act?'Activo':'Inactivo'}</span></td>
+      <td><div class="actions">
+        <button class="btn btn-sm btn-outline" data-edit-paq='${JSON.stringify(p).replace(/'/g,"&#39;")}'>Editar</button>
+        <button type="button" class="btn btn-sm btn-danger" data-del-paq="${esc(String(p.id||''))}">Eliminar</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  body.querySelectorAll('[data-edit-paq]').forEach(btn=>btn.addEventListener('click',()=>openPaqueteModal(JSON.parse(btn.getAttribute('data-edit-paq')))));
+  body.querySelectorAll('[data-del-paq]').forEach(btn=>btn.addEventListener('click',()=>deleteRecord('deletePackage', btn.getAttribute('data-del-paq'), loadPaquetes, 'paquetes')));
+}
+
+async function loadVentas(){
+  const res=await callAPI('getVentas',{});
+  ventasCache=(res.success&&res.data)?res.data:[];
+  // local fallback
+  const local=JSON.parse(localStorage.getItem('viajes_dgavi_ventas')||'[]');
+  if(!ventasCache.length&&local.length)ventasCache=local;
+  renderVentas(ventasCache);
+}
+function renderVentas(list){
+  const body=document.getElementById('ventasBody');
+  const total=list.reduce((s,v)=>s+Number(v.monto||0),0);
+  const mes=new Date().toISOString().slice(0,7);
+  const totalMes=list.filter(v=>String(v.fecha||'').startsWith(mes)).reduce((s,v)=>s+Number(v.monto||0),0);
+  document.getElementById('ventasTotal').textContent=money(total);
+  document.getElementById('ventasMes').textContent=money(totalMes);
+  document.getElementById('ventasCount').textContent=list.length;
+  if(!list.length){body.innerHTML='<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--gray)">Sin ventas registradas</td></tr>';return}
+  body.innerHTML=list.map(v=>`<tr>
+    <td>${esc(v.fecha)}</td><td>${esc(v.cliente)}</td><td>${esc(v.destino)}</td>
+    <td>${esc(v.concepto)}</td><td><strong>${money(v.monto)}</strong></td><td>${esc(v.estado)}</td>
+    <td><button type="button" class="btn btn-sm btn-danger" data-del-venta="${esc(String(v.id||''))}">Eliminar</button></td>
+  </tr>`).join('');
+  body.querySelectorAll('[data-del-venta]').forEach(btn=>btn.addEventListener('click',()=>deleteRecord('deleteVenta', btn.getAttribute('data-del-venta'), loadVentas, 'ventas')));
+}
+
+async function loadStats(){
+  await loadClientes();
+  const res=await callAPI('getStats',{});
+  if(res.success&&res.data){
+    const d=res.data;
+    document.getElementById('statClientes').textContent=d.totalClientes;
+    document.getElementById('statNuevos').textContent=d.clientesNuevos;
+    document.getElementById('statPromos').textContent=d.promocionesActivas;
+    document.getElementById('statDestinos').textContent=d.destinosPublicados;
+    document.getElementById('statPaquetes').textContent=d.paquetesActivos;
+    document.getElementById('statVentas').textContent=money(d.totalVentas);
+    document.getElementById('statVentasMes').textContent=money(d.totalVentasMes);
+    document.getElementById('statNumVentas').textContent=d.cantidadVentas;
+    destPopulares=d.destinosPopulares||[];
+  }else{
+    document.getElementById('statClientes').textContent=clientesCache.length;
+    document.getElementById('statNuevos').textContent=clientesCache.filter(c=>c.estado==='Nuevo').length;
+    const promos=await getPromotions(50);
+    document.getElementById('statPromos').textContent=promos.filter(p=>p.estado==='active'||p.estado==='Activo').length;
+    const destCount={};
+    clientesCache.forEach(c=>{const d=c.destino||'Sin destino';destCount[d]=(destCount[d]||0)+1});
+    destPopulares=Object.keys(destCount).map(k=>({destino:k,solicitudes:destCount[k]})).sort((a,b)=>b.solicitudes-a.solicitudes);
+    document.getElementById('statVentas').textContent=money(0);
+    document.getElementById('statVentasMes').textContent=money(0);
+    document.getElementById('statNumVentas').textContent='0';
+  }
+  const tbody=document.getElementById('destPopBody');
+  tbody.innerHTML=destPopulares.length?destPopulares.map((d,i)=>`<tr><td>${i+1}</td><td>${esc(d.destino)}</td><td>${d.solicitudes}</td></tr>`).join('')
+    :'<tr><td colspan="3" style="text-align:center;color:var(--gray)">Sin datos aún</td></tr>';
+}
+
+function loadConfig(){
+  const url=getGoogleScriptUrl()||SITE_CONFIG.googleScriptUrl||'';
+  const input=document.getElementById('inputGasUrl');
+  if(input) input.value = url.includes('YOUR_SCRIPT') ? '' : url;
+  document.getElementById('configUrl').textContent=url.includes('YOUR_SCRIPT')||!url?'(no configurada)':url;
+  document.getElementById('configStatus').textContent=url.includes('YOUR_SCRIPT')||!url?'⚠️ Sin conectar — datos de ejemplo':'✅ URL configurada (Sheets)';
+  document.getElementById('configUser').textContent=(SITE_CONFIG.admin&&SITE_CONFIG.admin.username)||'admin';
+}
+
+function showGasMsg(text, ok){
+  const el=document.getElementById('gasMsg');
+  if(!el) return;
+  el.style.display='block';
+  el.className='alert '+(ok?'alert-info':'alert-error');
+  if(ok){ el.style.background='rgba(46,204,113,.12)'; el.style.color='#1e8449'; el.style.borderColor='rgba(46,204,113,.3)'; }
+  el.textContent=text;
+}
+
+async function testGasConnection(){
+  const url=(document.getElementById('inputGasUrl')?.value||getGoogleScriptUrl()||'').trim();
+  if(!url || url.includes('YOUR_SCRIPT')){
+    showGasMsg('Primero pega y guarda una URL válida de Apps Script.', false);
+    return;
+  }
+  showGasMsg('Probando conexión...', true);
+  try{
+    // Temporarily set
+    const prev=SITE_CONFIG.googleScriptUrl;
+    SITE_CONFIG.googleScriptUrl=url;
+    const res=await callAPI('getStats',{});
+    SITE_CONFIG.googleScriptUrl=prev;
+    if(res && (res.success || res.data)){
+      showGasMsg('✅ Conexión exitosa. Google Sheets responde correctamente.', true);
+      document.getElementById('configStatus').textContent='✅ Conexión verificada';
+    } else if(res && res.useSample){
+      showGasMsg('No se pudo contactar la API. Revisa la URL y que el script esté implementado como "Cualquiera".', false);
+    } else {
+      showGasMsg('Respuesta recibida: '+(res?.message||JSON.stringify(res)), !!res?.success);
+    }
+  }catch(err){
+    showGasMsg('Error de red: '+err.message, false);
+  }
+}
+
+function downloadConfigJs(){
+  const url=(document.getElementById('inputGasUrl')?.value||getGoogleScriptUrl()||SITE_CONFIG.googleScriptUrl||'').trim();
+  const content = `/**
+ * Viajes D'Gavi by Morhú - config.js
+ * Generado desde el Panel Admin
+ */
+const SITE_CONFIG = {
+  name: "Viajes D'Gavi by Morhú",
+  slogan: "El placer de viajar sin preocupaciones",
+  url: "https://viajes-d-gavi.com",
+  email: "viajes.d.gavi@gmail.com",
+  phone: "81 3051 5995",
+  whatsapp: "528130515995",
+  address: "Monterrey, N.L. CP 66460",
+  googleScriptUrl: "${url.replace(/"/g, '')}",
+  social: {
+    facebook: "https://www.facebook.com/ViajesDGaviByMorhu",
+    instagram: "",
+    tiktok: "",
+    youtube: "",
+    twitter: ""
+  },
+  admin: {
+    username: "admin",
+    passwordHash: "Admin2026!"
+  }
+};
+(function applyStoredConfig() {
+  try {
+    const storedUrl = localStorage.getItem("vdg_gas_url");
+    if (storedUrl && storedUrl.indexOf("script.google.com") !== -1) {
+      SITE_CONFIG.googleScriptUrl = storedUrl.trim();
+    }
+  } catch (e) {}
+})();
+function getWhatsAppUrl(message) {
+  const defaultMsg = "Hola, me interesa recibir información sobre los viajes y promociones de Viajes D'Gavi by Morhú.";
+  const msg = encodeURIComponent(message || defaultMsg);
+  return "https://wa.me/" + SITE_CONFIG.whatsapp + "?text=" + msg;
+}
+function formatPrice(price) {
+  return "$" + Number(price).toLocaleString("es-MX") + " MXN";
+}
+function renderStars(rating) {
+  const r = Math.max(0, Math.min(5, parseInt(rating) || 5));
+  return "★".repeat(r) + "☆".repeat(5 - r);
+}
+function saveGoogleScriptUrl(url) {
+  url = (url || "").trim();
+  if (!url) { localStorage.removeItem("vdg_gas_url"); return { success: false, message: "URL vacía" }; }
+  localStorage.setItem("vdg_gas_url", url);
+  SITE_CONFIG.googleScriptUrl = url;
+  return { success: true, message: "URL guardada" };
+}
+function getGoogleScriptUrl() {
+  return SITE_CONFIG.googleScriptUrl || "";
+}
+`;
+  const blob=new Blob([content],{type:'application/javascript'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='config.js';
+  a.click();
+  showGasMsg('config.js descargado. Súbelo a assets/js/ en tu hosting para que el sitio público use la URL.', true);
+}
+
+/* ---- MODALS ---- */
+function openModal(title, fieldsHtml, onSubmit){
+  document.getElementById('modalTitle').textContent=title;
+  const form=document.getElementById('genericForm');
+  form.innerHTML=fieldsHtml+'<button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px">Guardar</button>';
+  document.getElementById('modalForm').classList.add('show');
+  // Preview de imagen local
+  const fileIn=form.querySelector('#fieldImagenFile');
+  if(fileIn){
+    fileIn.addEventListener('change',()=>{
+      const f=fileIn.files&&fileIn.files[0];
+      const prev=form.querySelector('#imgPreview');
+      if(!f||!prev) return;
+      const r=new FileReader();
+      r.onload=()=>{ prev.innerHTML='<img src="'+r.result+'" style="max-height:120px;border-radius:8px;object-fit:cover">'; };
+      r.readAsDataURL(f);
+    });
+  }
+  form.onsubmit=async e=>{e.preventDefault();await onSubmit(new FormData(form));document.getElementById('modalForm').classList.remove('show')};
+}
+
+function openPromoModal(data){
+  openModal(data?'Editar promoción':'Nueva promoción', `
+    <input type="hidden" name="id" value="${data?.id||''}">
+    <div class="form-group"><label>Título *</label><input name="titulo" required value="${esc(data?.titulo||'')}"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Destino *</label><input name="destino" required value="${esc(data?.destino||'')}"></div>
+      <div class="form-group"><label>Hotel</label><input name="hotel" value="${esc(data?.hotel||'')}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Precio *</label><input type="number" name="precio" required value="${data?.precio||''}"></div>
+      <div class="form-group"><label>Precio anterior</label><input type="number" name="precio_anterior" value="${data?.precio_anterior||''}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Descuento %</label><input type="number" name="descuento" value="${data?.descuento||''}"></div>
+      <div class="form-group"><label>Noches</label><input type="number" name="noches" value="${data?.noches||''}"></div>
+    </div>
+    <div class="form-group"><label>Descripción</label><textarea name="descripcion" rows="2">${esc(data?.descripcion||'')}</textarea></div>
+    ${imageFieldHtml(data?.imagen||'')}
+    <div class="form-group"><label>Estado</label><select name="estado"><option value="active" ${!data||data.estado==='active'?'selected':''}>Activo</option><option value="inactive" ${data?.estado==='inactive'?'selected':''}>Inactivo</option></select></div>
+  `, async fd=>{
+    const form=document.getElementById('genericForm');
+    const imgUrl=await resolveImageFromForm(form);
+    const obj=Object.fromEntries(fd.entries());
+    obj.imagen=imgUrl||obj.imagen||'';
+    obj.precio=Number(obj.precio);obj.precio_anterior=Number(obj.precio_anterior)||'';obj.descuento=Number(obj.descuento)||'';obj.noches=Number(obj.noches)||'';
+    if(!obj.id)delete obj.id;
+    const res=await callAPI('savePromotion',obj);
+    if(res.success||res.useSample){await loadPromos();alert(res.success?'Guardado en Google Sheets':'Guardado local (configura Apps Script)')}
+    else alert(res.message||'Error');
+  });
+}
+
+function openDestinoModal(data){
+  openModal(data?'Editar destino':'Nuevo destino', `
+    <input type="hidden" name="id" value="${data?.id||''}">
+    <div class="form-group"><label>Nombre del destino *</label><input name="nombre" required value="${esc(data?.nombre||data?.destino||'')}"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Categoría</label><input name="categoria" value="${esc(data?.categoria||'')}" placeholder="Playa, Internacional..."></div>
+      <div class="form-group"><label>País</label><input name="pais" value="${esc(data?.pais||'México')}"></div>
+    </div>
+    <div class="form-group"><label>Precio desde</label><input type="number" name="precio_desde" value="${data?.precio_desde||''}"></div>
+    <div class="form-group"><label>Descripción</label><textarea name="descripcion" rows="2">${esc(data?.descripcion||'')}</textarea></div>
+    ${imageFieldHtml(data?.imagen||'')}
+    <div class="form-group"><label>Estado</label><select name="estado"><option value="active">Activo</option><option value="inactive">Inactivo</option></select></div>
+  `, async fd=>{
+    const form=document.getElementById('genericForm');
+    const imgUrl=await resolveImageFromForm(form);
+    const obj=Object.fromEntries(fd.entries());
+    obj.imagen=imgUrl||obj.imagen||'';
+    obj.precio_desde=Number(obj.precio_desde)||0;
+    if(!obj.id)delete obj.id;
+    const res=await callAPI('saveDestination',obj);
+    if(res.success||res.useSample){await loadDestinos();alert(res.success?'Guardado en Sheets':'Guardado local')}
+    else alert(res.message||'Error');
+  });
+}
+
+function openPaqueteModal(data){
+  openModal(data?'Editar paquete':'Nuevo paquete', `
+    <input type="hidden" name="id" value="${data?.id||''}">
+    <div class="form-group"><label>Título *</label><input name="titulo" required value="${esc(data?.titulo||'')}"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Categoría</label><input name="categoria" value="${esc(data?.categoria||'')}" placeholder="Playa, Familia..."></div>
+      <div class="form-group"><label>Destino</label><input name="destino" value="${esc(data?.destino||'')}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Noches</label><input type="number" name="noches" value="${data?.noches||''}"></div>
+      <div class="form-group"><label>Precio *</label><input type="number" name="precio" required value="${data?.precio||''}"></div>
+    </div>
+    <div class="form-group"><label>Precio anterior</label><input type="number" name="precio_anterior" value="${data?.precio_anterior||''}"></div>
+    <div class="form-group"><label>Descripción</label><textarea name="descripcion" rows="2">${esc(data?.descripcion||'')}</textarea></div>
+    ${imageFieldHtml(data?.imagen||'')}
+    <div class="form-group"><label>Estado</label><select name="estado"><option value="active">Activo</option><option value="inactive">Inactivo</option></select></div>
+  `, async fd=>{
+    const form=document.getElementById('genericForm');
+    const imgUrl=await resolveImageFromForm(form);
+    const obj=Object.fromEntries(fd.entries());
+    obj.imagen=imgUrl||obj.imagen||'';
+    obj.precio=Number(obj.precio);obj.precio_anterior=Number(obj.precio_anterior)||'';obj.noches=Number(obj.noches)||'';
+    if(!obj.id)delete obj.id;
+    const res=await callAPI('savePackage',obj);
+    if(res.success||res.useSample){await loadPaquetes();alert(res.success?'Guardado en Sheets':'Guardado local')}
+    else alert(res.message||'Error');
+  });
+}
+
+function openVentaModal(){
+  openModal('Registrar venta', `
+    <div class="form-group"><label>Fecha</label><input type="date" name="fecha" value="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="form-group"><label>Cliente *</label><input name="cliente" required></div>
+    <div class="form-row">
+      <div class="form-group"><label>Destino</label><input name="destino"></div>
+      <div class="form-group"><label>Monto (MXN) *</label><input type="number" name="monto" required min="0"></div>
+    </div>
+    <div class="form-group"><label>Concepto</label><input name="concepto" placeholder="Paquete, promoción, boletos..."></div>
+    <div class="form-group"><label>Estado</label><select name="estado"><option>Confirmada</option><option>Pendiente</option><option>Cancelada</option></select></div>
+    <div class="form-group"><label>Notas</label><textarea name="notas" rows="2"></textarea></div>
+  `, async fd=>{
+    const obj=Object.fromEntries(fd.entries());
+    obj.monto=Number(obj.monto)||0;
+    const res=await callAPI('saveVenta',obj);
+    // Always keep local copy too
+    const local=JSON.parse(localStorage.getItem('viajes_dgavi_ventas')||'[]');
+    local.unshift({...obj,id:Date.now()});
+    localStorage.setItem('viajes_dgavi_ventas',JSON.stringify(local));
+    await loadVentas();
+    alert(res.success?'Venta guardada en Google Sheets':'Venta guardada localmente');
+  });
+}
+
+/* ---- INIT ---- */
+document.addEventListener('DOMContentLoaded',()=>{
+  if(isLoggedIn()){
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminLayout').classList.add('show');
+    document.getElementById('adminUserLabel').textContent='Hola, '+((SITE_CONFIG.admin&&SITE_CONFIG.admin.username)||'admin');
+    loadStats();
+  }
+  document.getElementById('loginForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    if(login(document.getElementById('loginUser').value.trim(),document.getElementById('loginPass').value))location.reload();
+    else{const err=document.getElementById('loginError');err.textContent='Usuario o contraseña incorrectos';err.style.display='block'}
+  });
+  document.getElementById('btnLogout').addEventListener('click',logout);
+  document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();showPage(el.getAttribute('data-page'))}));
+  document.getElementById('closeModal').addEventListener('click',()=>document.getElementById('modalForm').classList.remove('show'));
+  document.getElementById('modalForm').addEventListener('click',e=>{if(e.target.id==='modalForm')e.target.classList.remove('show')});
+
+  document.getElementById('searchCliente')?.addEventListener('input',e=>{
+    const q=e.target.value.toLowerCase(),est=document.getElementById('filterEstado').value;
+    renderClientes(clientesCache.filter(c=>(!q||(c.nombre||'').toLowerCase().includes(q))&&(!est||c.estado===est)));
+  });
+  document.getElementById('filterEstado')?.addEventListener('change',e=>{
+    const q=document.getElementById('searchCliente').value.toLowerCase(),est=e.target.value;
+    renderClientes(clientesCache.filter(c=>(!q||(c.nombre||'').toLowerCase().includes(q))&&(!est||c.estado===est)));
+  });
+
+  document.getElementById('btnNuevaPromo')?.addEventListener('click',()=>openPromoModal(null));
+  document.getElementById('btnNuevoDestino')?.addEventListener('click',()=>openDestinoModal(null));
+  document.getElementById('btnNuevoPaquete')?.addEventListener('click',()=>openPaqueteModal(null));
+  document.getElementById('btnNuevaVenta')?.addEventListener('click',openVentaModal);
+
+  document.getElementById('btnDownloadClientes')?.addEventListener('click',()=>{
+    const rows=[['Fecha','Nombre','Teléfono','Email','Destino','Estado'],...clientesCache.map(c=>[c.fecha,c.nombre,c.telefono,c.email,c.destino,c.estado])];
+    downloadCSV('clientes-viajes-dgavi.csv',rows);
+  });
+  document.getElementById('btnDownloadDestinos')?.addEventListener('click',()=>{
+    const rows=[['#','Destino','Solicitudes'],...destPopulares.map((d,i)=>[i+1,d.destino,d.solicitudes])];
+    downloadCSV('destinos-mas-solicitados.csv',rows);
+  });
+  document.getElementById('btnDownloadDestinos2')?.addEventListener('click',()=>{
+    const rows=[['Destino','Categoría','País','Precio desde','Estado'],...destinosCache.map(d=>[d.nombre||d.destino,d.categoria,d.pais,d.precio_desde,d.estado])];
+    downloadCSV('destinos.csv',rows);
+  });
+  
+  document.getElementById('btnSaveGasUrl')?.addEventListener('click',()=>{
+    const url=document.getElementById('inputGasUrl').value.trim();
+    const r=saveGoogleScriptUrl(url);
+    showGasMsg(r.message+(r.success?' Recarga el Dashboard para ver datos de Sheets.':''), r.success);
+    if(r.success) loadConfig();
+  });
+  document.getElementById('btnTestGasUrl')?.addEventListener('click', testGasConnection);
+  document.getElementById('btnDownloadConfig')?.addEventListener('click', downloadConfigJs);
+
+  document.getElementById('btnDownloadVentas')?.addEventListener('click',()=>{
+    const rows=[['Fecha','Cliente','Destino','Concepto','Monto','Estado'],...ventasCache.map(v=>[v.fecha,v.cliente,v.destino,v.concepto,v.monto,v.estado])];
+    downloadCSV('ventas-viajes-dgavi.csv',rows);
+  });
+});
+</script>
+</body>
+</html>
