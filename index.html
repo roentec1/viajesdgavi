@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viajes D'Gavi by Morhú | Agencia de Viajes</title>
+  <meta name="description" content="Viajes D'Gavi by Morhú — El placer de viajar sin preocupaciones. Promociones, destinos, tours y paquetes todo incluido actualizados en tiempo real.">
+  <link rel="icon" type="image/jpeg" href="assets/img/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header-container">
+      <a href="index.html" class="logo" aria-label="Viajes D'Gavi by Morhú">
+        <img src="assets/img/logo.jpg" alt="Viajes D'Gavi by Morhú" width="180" height="52">
+      </a>
+      <nav class="nav" id="nav">
+        <ul class="nav-list">
+          <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+          <li><a href="#promociones" class="nav-link">Promociones</a></li>
+          <li><a href="#destinos" class="nav-link">Destinos</a></li>
+          <li><a href="#todo-incluido" class="nav-link">Todo incluido</a></li>
+          <li><a href="#tours" class="nav-link">Tours</a></li>
+          <li><a href="#servicios" class="nav-link">Servicios</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+          <li><a href="#horarios" class="nav-link">Horarios</a></li>
+          <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="contacto.html" class="btn btn-primary btn-sm header-cta">Cotiza tu viaje</a>
+        <a href="https://wa.me/528130515995?text=Hola%2C%20me%20interesa%20recibir%20informaci%C3%B3n%20sobre%20los%20viajes%20y%20promociones%20de%20Viajes%20D%27Gavi%20by%20Morh%C3%BA." class="btn btn-whatsapp btn-sm" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="data-status-bar" id="dataStatusBar">
+    <div class="container data-status-inner">
+      <span class="data-status-text" id="dataStatus">Cargando datos desde Google Sheets...</span>
+      <button type="button" class="btn-refresh" id="btnRefreshNow" title="Volver a leer Google Sheets ahora">
+        <svg class="refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <span>Actualizar ahora</span>
+      </button>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="hero-slider">
+        <div class="hero-slide active">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80" alt="Riviera Maya" loading="eager">
+          <div class="hero-overlay"></div>
+          <div class="hero-content"><div class="container">
+            <span class="hero-badge">Viajes D'Gavi by Morhú</span>
+            <h1 class="hero-title">El placer de viajar sin preocupaciones</h1>
+            <p class="hero-text">Promociones, destinos y tours actualizados desde nuestra oficina</p>
+            <div class="hero-buttons">
+              <a href="#promociones" class="btn btn-secondary btn-lg">Ver promociones</a>
+              <a href="contacto.html" class="btn btn-outline btn-lg">Solicitar información</a>
+            </div>
+          </div></div>
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80" alt="Los Cabos" loading="lazy">
+          <div class="hero-overlay"></div>
+          <div class="hero-content"><div class="container">
+            <span class="hero-badge">Todo incluido</span>
+            <h1 class="hero-title">Resorts y experiencias premium</h1>
+            <p class="hero-text">Cancún, Riviera Maya, Los Cabos y más</p>
+            <div class="hero-buttons">
+              <a href="#todo-incluido" class="btn btn-secondary btn-lg">Ver paquetes</a>
+              <a href="https://wa.me/528130515995" class="btn btn-outline btn-lg" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div></div>
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80" alt="Aventura" loading="lazy">
+          <div class="hero-overlay"></div>
+          <div class="hero-content"><div class="container">
+            <span class="hero-badge">Tours</span>
+            <h1 class="hero-title">Aventura y cultura por México</h1>
+            <p class="hero-text">Huasteca, Chiapas, Oaxaca, Barrancas del Cobre y más</p>
+            <div class="hero-buttons">
+              <a href="#tours" class="btn btn-secondary btn-lg">Explorar tours</a>
+              <a href="contacto.html" class="btn btn-outline btn-lg">Cotiza ahora</a>
+            </div>
+          </div></div>
+        </div>
+      </div>
+      <div class="hero-arrows">
+        <button class="hero-arrow hero-arrow-prev" aria-label="Anterior"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button class="hero-arrow hero-arrow-next" aria-label="Siguiente"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+      <div class="hero-nav">
+        <button class="hero-dot active" aria-label="1"></button>
+        <button class="hero-dot" aria-label="2"></button>
+        <button class="hero-dot" aria-label="3"></button>
+      </div>
+    </section>
+
+    <!-- PROMOCIONES -->
+    <section class="section section-alt" id="promociones">
+      <div class="container">
+        <h2 class="section-title">Promociones <span>especiales</span></h2>
+        <p class="section-subtitle">Ofertas activas publicadas en nuestra hoja de promociones</p>
+        <div class="promo-grid" id="promoGrid">
+          <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTINOS -->
+    <section class="section" id="destinos">
+      <div class="container">
+        <h2 class="section-title">Destinos <span>populares</span></h2>
+        <p class="section-subtitle">Explora los destinos que más solicitan nuestros viajeros</p>
+        <div class="destinations-grid" id="destGrid">
+          <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TODO INCLUIDO -->
+    <section class="section section-alt" id="todo-incluido">
+      <div class="container">
+        <h2 class="section-title">Paquetes <span>todo incluido</span></h2>
+        <p class="section-subtitle">Resorts y planes con alimentos, hospedaje y más</p>
+        <div class="promo-grid" id="todoIncluidoGrid">
+          <div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOURS -->
+    <section class="section" id="tours">
+      <div class="container">
+        <h2 class="section-title">Todos los <span>tours</span></h2>
+        <p class="section-subtitle">Salidas programadas, itinerarios y precios actualizados</p>
+        <div class="promo-grid" id="toursGrid">
+          <div class="skeleton"></div><div class="skeleton"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="section section-alt" id="servicios">
+      <div class="container">
+        <h2 class="section-title">Nuestros <span>servicios</span></h2>
+        <p class="section-subtitle">Todo lo que necesitas para viajar con tranquilidad</p>
+        <div class="services-grid" id="serviciosGrid">
+          <div class="skeleton" style="min-height:180px"></div>
+          <div class="skeleton" style="min-height:180px"></div>
+          <div class="skeleton" style="min-height:180px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="section-title">Preguntas <span>frecuentes</span></h2>
+        <p class="section-subtitle">Respuestas claras antes de reservar</p>
+        <div class="faq-list" id="faqList"></div>
+      </div>
+    </section>
+
+    <!-- HORARIOS -->
+    <section class="section section-alt" id="horarios">
+      <div class="container">
+        <h2 class="section-title">Horarios y <span>salidas</span></h2>
+        <p class="section-subtitle">Operación de tours y atención al cliente</p>
+        <div id="horariosList"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <div class="container">
+        <h2>¿Listo para tu próxima aventura?</h2>
+        <p>Escríbenos y te armamos la mejor opción según tu presupuesto</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+          <a href="contacto.html" class="btn btn-secondary btn-lg">Cotiza tu viaje</a>
+          <a href="https://wa.me/528130515995?text=Hola%2C%20me%20interesa%20recibir%20informaci%C3%B3n%20sobre%20los%20viajes%20y%20promociones%20de%20Viajes%20D%27Gavi%20by%20Morh%C3%BA." class="btn btn-outline btn-lg" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo footer-logo">
+            <img src="assets/img/logo.jpg" alt="Viajes D'Gavi by Morhú" width="180" height="52">
+          </a>
+          <p class="footer-slogan">El placer de viajar sin preocupaciones</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/ViajesDGaviByMorhu" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+            <a href="https://wa.me/528130515995" target="_blank" rel="noopener" aria-label="WhatsApp">W</a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="#promociones">Promociones</a></li>
+            <li><a href="#destinos">Destinos</a></li>
+            <li><a href="#tours">Tours</a></li>
+            <li><a href="#todo-incluido">Todo incluido</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Ayuda</h4>
+          <ul>
+            <li><a href="#faq">Preguntas frecuentes</a></li>
+            <li><a href="#horarios">Horarios</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="aviso-privacidad.html">Aviso de privacidad</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="tel:+528130515995">81 3051 5995</a></li>
+            <li><a href="mailto:viajes.d.gavi@gmail.com">viajes.d.gavi@gmail.com</a></li>
+            <li>Monterrey, N.L. CP 66460</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Viajes D'Gavi by Morhú. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/528130515995?text=Hola%2C%20me%20interesa%20recibir%20informaci%C3%B3n%20sobre%20los%20viajes%20y%20promociones%20de%20Viajes%20D%27Gavi%20by%20Morh%C3%BA." class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.85 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="assets/js/sheets.js"></script>
+  <script src="assets/js/render.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      const btn = document.getElementById('btnRefreshNow');
+      const status = document.getElementById('dataStatus');
+      if (!btn) return;
+      btn.addEventListener('click', async function () {
+        if (SheetsAPI.isRefreshing()) return;
+        btn.classList.add('is-loading');
+        btn.disabled = true;
+        if (status) status.textContent = 'Actualizando datos desde Google Sheets...';
+        const r = await SheetsAPI.refreshNow();
+        btn.classList.remove('is-loading');
+        btn.disabled = false;
+        if (status) {
+          status.textContent = r.success
+            ? ('Datos actualizados: ' + new Date().toLocaleString('es-MX') + ' · Se refrescan cada 15 min')
+            : ('No se pudo actualizar: ' + (r.message || 'intenta de nuevo'));
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

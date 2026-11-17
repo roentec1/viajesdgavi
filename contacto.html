@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | Viajes D'Gavi by Morhú</title>
+  <meta name="description" content="Solicita información y cotizaciones. Viajes D'Gavi by Morhú.">
+  <link rel="icon" type="image/jpeg" href="assets/img/logo.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header-container">
+      <a href="index.html" class="logo" aria-label="Viajes D'Gavi by Morhú">
+        <img src="assets/img/logo.jpg" alt="Viajes D'Gavi by Morhú" width="180" height="52">
+      </a>
+      <nav class="nav" id="nav">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Inicio</a></li>
+          <li><a href="index.html#promociones" class="nav-link">Promociones</a></li>
+          <li><a href="index.html#destinos" class="nav-link">Destinos</a></li>
+          <li><a href="index.html#tours" class="nav-link">Tours</a></li>
+          <li><a href="contacto.html" class="nav-link active">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="https://wa.me/528130515995" class="btn btn-whatsapp btn-sm" target="_blank" rel="noopener">WA</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Contacto</h1>
+        <p>Cuéntanos tu viaje ideal y te respondemos por WhatsApp</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="contact-section">
+          <div class="contact-info">
+            <h2>Habla con un asesor</h2>
+            <p>Completa el formulario y se abrirá WhatsApp con tus datos listos para enviar. También puedes llamarnos o escribirnos directo.</p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-item-icon">📞</div>
+                <div><strong>Teléfono / WhatsApp</strong><br><a href="tel:+528130515995">81 3051 5995</a></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">✉️</div>
+                <div><strong>Correo</strong><br><a href="mailto:viajes.d.gavi@gmail.com">viajes.d.gavi@gmail.com</a></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <div><strong>Ubicación</strong><br>Monterrey, N.L. CP 66460</div>
+              </div>
+            </div>
+            <div style="margin-top:28px">
+              <a href="https://wa.me/528130515995?text=Hola%2C%20me%20interesa%20recibir%20informaci%C3%B3n%20sobre%20los%20viajes%20y%20promociones%20de%20Viajes%20D%27Gavi%20by%20Morh%C3%BA." class="btn btn-whatsapp" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+            </div>
+          </div>
+
+          <div class="contact-form">
+            <h3 style="margin-bottom:24px">Solicitar información</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <label>Nombre completo *</label>
+                <input type="text" name="nombre" required placeholder="Tu nombre">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Teléfono / WhatsApp *</label>
+                  <input type="tel" name="telefono" required placeholder="81 1234 5678">
+                </div>
+                <div class="form-group">
+                  <label>Correo electrónico</label>
+                  <input type="email" name="email" placeholder="tu@email.com">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Destino o tour de interés *</label>
+                <input type="text" name="destino" id="campoDestino" required placeholder="Ej. Cancún, Huasteca, Tour Palenque...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Fecha tentativa de viaje</label>
+                  <input type="month" name="fecha">
+                </div>
+                <div class="form-group">
+                  <label>Pasajeros</label>
+                  <input type="number" name="pasajeros" min="1" max="50" value="2">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Mensaje</label>
+                <textarea name="mensaje" placeholder="Cuéntanos más detalles..."></textarea>
+              </div>
+              <div class="form-check">
+                <input type="checkbox" id="privacy" required>
+                <label for="privacy">Acepto el <a href="aviso-privacidad.html" target="_blank">aviso de privacidad</a>.</label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%">ENVIAR POR WHATSAPP</button>
+              <p style="margin-top:12px;font-size:.8rem;color:var(--gray);text-align:center">
+                Se abrirá WhatsApp con tu mensaje listo. Un asesor te atenderá ahí.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border:none">
+        <p>© 2026 Viajes D'Gavi by Morhú. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/528130515995" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.85 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    if (params.get('destino')) {
+      const el = document.getElementById('campoDestino');
+      if (el) el.value = params.get('destino');
+    }
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const fd = new FormData(this);
+      const msg = [
+        "Hola, me interesa recibir información de Viajes D'Gavi by Morhú.",
+        "",
+        "Nombre: " + (fd.get('nombre') || ''),
+        "Teléfono: " + (fd.get('telefono') || ''),
+        "Email: " + (fd.get('email') || ''),
+        "Interés: " + (fd.get('destino') || ''),
+        "Fecha tentativa: " + (fd.get('fecha') || 'Por definir'),
+        "Pasajeros: " + (fd.get('pasajeros') || ''),
+        "Mensaje: " + (fd.get('mensaje') || '')
+      ].join('\n');
+      window.open('https://wa.me/528130515995?text=' + encodeURIComponent(msg), '_blank');
+    });
+  </script>
+</body>
+</html>
